@@ -97,6 +97,7 @@ def walk_tree(obj: types.ModuleType | type) -> AstInfo:
 @cache
 def _walk_tree(
     tree: ast.Module | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef,
+    all_variabes: bool = True
 ) -> AstInfo:
     docstrings = {}
     annotations = {}
@@ -123,6 +124,8 @@ def _walk_tree(
         ):  # pragma: no cover
             # Python <= 3.7
             docstrings[name] = inspect.cleandoc(b.value.s).strip()
+        elif all_variabes:
+            docstrings[name] = ''
     return AstInfo(
         docstrings,
         annotations,
